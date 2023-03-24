@@ -2,7 +2,7 @@ import random
 import json
 
 from locust import TaskSet, task
-from locust.contrib.fasthttp import FastHttpLocust
+from locust.contrib.fasthttp import FastHttpUser
 
 from .variables import Variables, GenerateRandomPatient, GenerateRandomTest
 
@@ -23,9 +23,9 @@ class EchoTaskSet(TaskSet):
             if response.status_code != 200:
                 response.failure(f"Code: {response.status_code} | Content: {response.text} | Task: EchoTask")
 
-class EchoLocust(FastHttpLocust):
+class EchoLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = EchoTaskSet
+    tasks = [EchoTaskSet]
 
 # Create patient
 def CreatePatient(self, data):
@@ -56,9 +56,9 @@ class CreatePatientTaskSet(TaskSet):
             else:
                 response.failure(f"Code: {response.status_code} | Content: {response.text} | Task: CreateInvalidPatient")
 
-class CreatePatientLocust(FastHttpLocust):
+class CreatePatientLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = CreatePatientTaskSet
+    tasks = [CreatePatientTaskSet]
 
 # Load patient
 def LoadPatient(self, id):
@@ -88,9 +88,9 @@ class LoadPatientTaskSet(TaskSet):
             else:
                 response.failure(f"Code: {response.status_code} | Content: {response.text} | Task: LoadInvalidPatient")
 
-class LoadPatientLocust(FastHttpLocust):
+class LoadPatientLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = LoadPatientTaskSet
+    tasks = [LoadPatientTaskSet]
 
 # Update patient
 def UpdatePatient(self, data):
@@ -118,9 +118,9 @@ class UpdatePatientTaskSet(TaskSet):
                 else:
                     response.failure(f"Code: {response.status_code} | Content: {response.text} | Task: UpdatePatientTask")
 
-class UpdatePatientLocust(FastHttpLocust):
+class UpdatePatientLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = UpdatePatientTaskSet
+    tasks = [UpdatePatientTaskSet]
 
 # Search patient
 def SearchPatient(self, data):
@@ -152,9 +152,9 @@ class SearchPatientTaskSet(TaskSet):
                 if response.status_code != 200:
                     response.failure(f"Code: {response.status_code} | Content: {response.text} | Task: SearchAllPatients")
 
-class SearchPatientLocust(FastHttpLocust):
+class SearchPatientLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = SearchPatientTaskSet
+    tasks = [SearchPatientTaskSet]
 
 # Create test
 def CreateTest(self, data):
@@ -191,9 +191,9 @@ class CreateTestTaskSet(TaskSet):
             else:
                 response.failure(f"Code: {response.status_code} | Content: {response.text} | Task: CreateInvalidTest")
 
-class CreateTestLocust(FastHttpLocust):
+class CreateTestLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = CreateTestTaskSet
+    tasks = [CreateTestTaskSet]
 
 # Load tests
 def LoadTests(self, id):
@@ -223,9 +223,9 @@ class LoadTestsTaskSet(TaskSet):
             else:
                 response.failure(f"Code: {response.status_code} | Content: {response.text} | Task: LoadTestsWithInvalidPatient")
 
-class LoadTestsLocust(FastHttpLocust):
+class LoadTestsLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = LoadTestsTaskSet
+    tasks = [LoadTestsTaskSet]
 
 # Load test
 def LoadTest(self, pid, tid):
@@ -257,9 +257,9 @@ class LoadTestTaskSet(TaskSet):
                 else:
                     response.failure(f"Code: {response.status_code} | Content: {response.text} | Task: LoadTestWithInvalidTest")
 
-class LoadTestLocust(FastHttpLocust):
+class LoadTestLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = LoadTestTaskSet
+    tasks = [LoadTestTaskSet]
 
 # All
 class AllTaskSet(TaskSet):
@@ -278,6 +278,6 @@ class AllTaskSet(TaskSet):
     def index(self):
         pass
     
-class AllLocust(FastHttpLocust):
+class AllLocust(FastHttpUser):
     wait_time = Variables.wait_time
-    task_set = AllTaskSet
+    tasks = [AllTaskSet]
