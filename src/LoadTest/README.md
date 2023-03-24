@@ -47,7 +47,7 @@ After writing Locust tests, you can first run those tests locally to check if yo
 Install Locust with pip:
 
 ```bash
-pip install locustio
+pip install locust
 ```
 
 ### How to run tests locally
